@@ -1,4 +1,4 @@
-<?php include "./backend/items.php"; ?>
+<?php include "../backend/items.php"; ?>
 
 <!DOCTYPE html>
 <html>
@@ -21,32 +21,57 @@
     </nav>
 
     <div class="container">
-        <h1>Welcome to My Store</h1>
-        <form method="GET" action="index.php" class="search-form">
-            <input type="text" name="q" placeholder="Search for a product..."
-                value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q']) : ''; ?>" />
+
+        <h1>Available Items</h1>
+
+        <!-- Search Bar -->
+        <form method="GET" action="items.php" class="search-form">
+            <input type="text" name="q" placeholder="Search items..." value="<?php echo htmlspecialchars($search); ?>">
             <button type="submit">Search</button>
         </form>
-    </div>
 
-    <div class="item-grid">
-        <?php
-        $query = isset($_GET['q']) ? strtolower($_GET['q']) : "";
+        <hr>
 
-        foreach ($items as $item) {
-            if ($query && strpos(strtolower($item["name"]), $query) === false) {
-                continue; // Skip items that don’t match search
-            }
+        <div class="item-grid">
+            <?php if ($result && $result->num_rows > 0): ?>
 
-            echo "
-                <div class='item-card'>
-                    <img src='{$item['image']}' alt='{$item['name']}'>
-                    <h3>{$item['name']}</h3>
-                    <p>$" . number_format($item['price'], 2) . "</p>
-                    <button>Add to Cart</button>
-                </div>
-            ";
-        }
-        ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <div class="item-card">
+
+                        <!-- Image -->
+                        <img src="<?php echo $row['thumbnail_url'] ?: $row['image_url']; ?>"
+                            alt="<?php echo htmlspecialchars($row['name']); ?>">
+
+                        <!-- Name -->
+                        <h3><?php echo htmlspecialchars($row['name']); ?></h3>
+
+                        <!-- Brand -->
+                        <?php if (!empty($row['brand'])): ?>
+                            <p style="color:#777; font-size:14px;"><?php echo htmlspecialchars($row['brand']); ?></p>
+                        <?php endif; ?>
+
+                        <!-- Price -->
+                        <?php if (!empty($row['sale_price']) && $row['sale_price'] > 0): ?>
+                            <p>
+                                <span style="text-decoration: line-through; color:#888;">
+                                    <?php echo $row['currency'] . $row['price']; ?>
+                                </span>
+                                <span style="color:green; font-weight:bold;">
+                                    <?php echo $row['currency'] . $row['sale_price']; ?>
+                                </span>
+                            </p>
+                        <?php else: ?>
+                            <p><?php echo $row['currency'] . $row['price']; ?></p>
+                        <?php endif; ?>
+
+                        <!-- Button -->
+                        <button>Add to Cart</button>
+                    </div>
+                <?php endwhile; ?>
+
+            <?php else: ?>
+                <p>No items found.</p>
+            <?php endif; ?>
+        </div>
     </div>
 </body>
