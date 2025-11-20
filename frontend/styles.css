@@ -1,0 +1,62 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #fafafa;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background: #333;
+  padding: 15px;
+}
+
+.navbar a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+.brand {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.btn {
+  background: #4caf50;
+  padding: 8px 14px;
+  border-radius: 5px;
+}
+
+.container {
+  padding: 20px;
+}
+
+.search-form input {
+  padding: 8px;
+  width: 250px;
+}
+
+.search-form button {
+  padding: 8px 12px;
+}
+
+.item-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.item-card {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 15px;
+  width: 180px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.item-card img {
+  width: 100%;
+  border-radius: 4px;
+}
