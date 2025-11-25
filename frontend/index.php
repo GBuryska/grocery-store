@@ -31,7 +31,7 @@ if (isset($_SESSION["username"])) {
 
         <div class="nav-right">
             <a href="login.php">Login</a>
-            <a href="register.php" class="btn">Create Account</a>
+            <a href="create-account.php" class="btn">Create Account</a>
         </div>
     </nav>
 
@@ -39,9 +39,9 @@ if (isset($_SESSION["username"])) {
 
         <h1>Available Items</h1>
 
-        <!-- Search Bar -->
         <form method="GET" action="items.php" class="search-form">
-            <input type="text" name="q" placeholder="Search items..." value="<?php echo htmlspecialchars($search); ?>">
+            <input type="text" name="query" placeholder="Search items..."
+                value="<?php echo htmlspecialchars($search); ?>">
             <button type="submit">Search</button>
         </form>
 
@@ -53,19 +53,14 @@ if (isset($_SESSION["username"])) {
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <div class="item-card">
 
-                        <!-- Image -->
-                        <img src="<?php echo $row['thumbnail_url'] ?: $row['image_url']; ?>"
-                            alt="<?php echo htmlspecialchars($row['name']); ?>">
+                        <img src="<?php echo $row['image_url']; ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
 
-                        <!-- Name -->
                         <h3><?php echo htmlspecialchars($row['name']); ?></h3>
 
-                        <!-- Brand -->
                         <?php if (!empty($row['brand'])): ?>
                             <p style="color:#777; font-size:14px;"><?php echo htmlspecialchars($row['brand']); ?></p>
                         <?php endif; ?>
 
-                        <!-- Price -->
                         <?php if (!empty($row['sale_price']) && $row['sale_price'] > 0): ?>
                             <p>
                                 <span style="text-decoration: line-through; color:#888;">
@@ -78,9 +73,6 @@ if (isset($_SESSION["username"])) {
                         <?php else: ?>
                             <p><?php echo $row['currency'] . $row['price']; ?></p>
                         <?php endif; ?>
-
-                        <!-- Button -->
-                        <button>Add to Cart</button>
                     </div>
                 <?php endwhile; ?>
 
