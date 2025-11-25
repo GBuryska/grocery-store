@@ -1,18 +1,3 @@
-<?php
-session_start();
-
-// Force browser not to cache this page
-header("Cache-Control: no-cache, must-revalidate");
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
-
-// If user is logged in, redirect to logged-in page
-if (isset($_SESSION["username"])) {
-    header("Location: LoggedInIndex.php");
-    exit();
-}
-?>
-
-
 <?php include "../backend/items.php"; ?>
 
 <!DOCTYPE html>
@@ -30,10 +15,13 @@ if (isset($_SESSION["username"])) {
         </div>
 
         <div class="nav-right">
-            <a href="login.php">Login</a>
-            <a href="register.php" class="btn">Create Account</a>
+            <a href="items.php">Search Items</a>
+            <a href="cart.php">My Cart</a>
+            <a href="orders.php">My Orders</a>
+            <a href="../backend/logout.php">Log Out</a>
         </div>
     </nav>
+
 
     <div class="container">
 
