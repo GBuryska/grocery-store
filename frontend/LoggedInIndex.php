@@ -42,8 +42,7 @@
                     <div class="item-card">
 
                         <!-- Image -->
-                        <img src="<?php echo $row['thumbnail_url'] ?: $row['image_url']; ?>"
-                            alt="<?php echo htmlspecialchars($row['name']); ?>">
+                        <img src="<?php echo $row['image_url']; ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
 
                         <!-- Name -->
                         <h3><?php echo htmlspecialchars($row['name']); ?></h3>
