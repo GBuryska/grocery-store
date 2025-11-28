@@ -55,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
 
         <div class="nav-right">
+            <a href="index.php">Search</a>
             <a href="login.php">Login</a>
             <a href="register.php" class="btn">Create Account</a>
         </div>

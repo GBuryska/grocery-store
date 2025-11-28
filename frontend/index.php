@@ -30,6 +30,7 @@ if (isset($_SESSION["username"])) {
         </div>
 
         <div class="nav-right">
+            <a href="index.php">Search</a>
             <a href="login.php">Login</a>
             <a href="create-account.php" class="btn">Create Account</a>
         </div>
