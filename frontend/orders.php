@@ -63,7 +63,7 @@ $result = $stmt->get_result();
                             <td style="padding:8px;"><?php echo $row['placed_at']; ?></td>
                             <td style="padding:8px;"><?php echo '$' . number_format($row['total_cost'], 2); ?></td>
                             <td style="padding:8px;">
-                                <a href="OrderDetails.php?order_id=<?php echo $row['order_id']; ?>">View Details</a>
+                                <a href="orderDetails.php?order_id=<?php echo $row['order_id']; ?>">View Details</a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
