@@ -1,5 +1,5 @@
 <?php
-require_once 'db_config.php';
+include "db_config.php";
 
 $search = isset($_GET['query']) ? trim($_GET['query']) : "";
 
@@ -16,7 +16,7 @@ $query = "SELECT
           FROM food_items
           WHERE is_active = 1";
 
-// Apply search if not empty
+// Apply search only when query text exists
 if (!empty($search)) {
   $item = $conn->real_escape_string($search);
   $query .= " AND (name LIKE '%$item%' OR brand LIKE '%$item%' OR category LIKE '%$item%')";
@@ -25,3 +25,4 @@ if (!empty($search)) {
 $query .= " ORDER BY name ASC";
 
 $result = $conn->query($query);
+?>

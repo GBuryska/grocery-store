@@ -1,9 +1,6 @@
 <?php
 session_start();
-
-// Force browser not to cache this page
-header("Cache-Control: no-cache, must-revalidate");
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+include "../backend/db_config.php";
 
 // If user is logged in, redirect to logged-in page
 if (isset($_SESSION["username"])) {
@@ -13,7 +10,10 @@ if (isset($_SESSION["username"])) {
 ?>
 
 
-<?php include "../backend/items.php"; ?>
+<?php
+$search = isset($_GET['query']) ? trim($_GET['query']) : "";
+include "../backend/items.php";
+?>
 
 <!DOCTYPE html>
 <html>
@@ -40,7 +40,7 @@ if (isset($_SESSION["username"])) {
 
         <h1>Available Items</h1>
 
-        <form method="GET" action="items.php" class="search-form">
+        <form method="GET" action="index.php" class="search-form">
             <input type="text" name="query" placeholder="Search items..."
                 value="<?php echo htmlspecialchars($search); ?>">
             <button type="submit">Search</button>
@@ -64,9 +64,10 @@ if (isset($_SESSION["username"])) {
 
                         <?php if (!empty($row['sale_price']) && $row['sale_price'] > 0): ?>
                             <p>
-                                <span style="text-decoration: line-through; color:#888;">
+                                <span style="text-decoration: line-through; color:#FF7F7F;">
                                     <?php echo $row['currency'] . $row['price']; ?>
                                 </span>
+                                <br />
                                 <span style="color:green; font-weight:bold;">
                                     <?php echo $row['currency'] . $row['sale_price']; ?>
                                 </span>

@@ -1,12 +1,9 @@
 <?php
-session_start();
 require_once "../backend/db_config.php";
 
-$username = $_SESSION['username'] ?? null;
-if (!$username) {
-    header("Location: ../frontend/LogIn.php");
-    exit();
-}
+require_once "../backend/auth_check.php";
+auth("./login.php");
+$username = $_SESSION['username'];
 
 // Validate order_id
 if (!isset($_GET['order_id']) || !is_numeric($_GET['order_id'])) {
@@ -45,13 +42,14 @@ $items = $stmt->get_result();
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Order Details</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
             <a class="brand" href="index.php">My Store</a>
@@ -78,19 +76,20 @@ $items = $stmt->get_result();
                 </tr>
             </thead>
             <tbody>
-                <?php 
+                <?php
                 $grand_total = 0;
                 $currency = '$';
                 while ($row = $items->fetch_assoc()):
                     $item_total = $row['quantity'] * $row['price'];
                     $grand_total += $item_total;
                     $currency = $row['currency'];
-                ?>
+                    ?>
                     <tr>
                         <td style="padding:8px;"><?php echo htmlspecialchars($row['name']); ?></td>
                         <td style="padding:8px;"><?php echo $row['quantity']; ?></td>
                         <td style="padding:8px;"><?php echo $currency . number_format($row['price'], 2); ?></td>
-                        <td style="padding:8px; text-align:right;"><?php echo $currency . number_format($item_total, 2); ?></td>
+                        <td style="padding:8px; text-align:right;"><?php echo $currency . number_format($item_total, 2); ?>
+                        </td>
                     </tr>
                 <?php endwhile; ?>
 
@@ -107,4 +106,5 @@ $items = $stmt->get_result();
     </div>
 
 </body>
+
 </html>

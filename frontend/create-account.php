@@ -24,7 +24,6 @@
     <div class="container login-signup">
 
         <h1>Sign Up</h1>
-        <p>Join the Grocery Store for exclusive offers.</p>
 
         <div id="messageBox">
             <p id="messageText"></p>
@@ -54,29 +53,7 @@
             const messageBox = document.getElementById('messageBox');
             const messageText = document.getElementById('messageText');
 
-            // Reset classes
-            messageBox.className = 'p-3 mb-6 rounded-lg text-sm transition-all duration-300 ease-in-out';
-
-            // Set classes based on message type
-            if (type === 'success') {
-                messageBox.classList.add('bg-green-100', 'text-green-700');
-            } else if (type === 'error') {
-                messageBox.classList.add('bg-red-100', 'text-red-700');
-            } else {
-                // Default style for general info if needed
-                messageBox.classList.add('bg-blue-100', 'text-blue-700');
-            }
-
             messageText.textContent = message;
-            // Show the box
-            setTimeout(() => {
-                messageBox.classList.add('message-show');
-            }, 10);
-
-            // Hide the message after 5 seconds
-            setTimeout(() => {
-                messageBox.classList.remove('message-show');
-            }, 5000);
         }
         async function handleRegistration(event) {
             event.preventDefault();

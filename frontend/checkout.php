@@ -1,8 +1,9 @@
 <?php
-session_start();
 include "../backend/db_config.php";
 
-$username = $_SESSION['username'] ?? 'Braden'; // fallback for testing
+require_once "../backend/auth_check.php";
+auth("./login.php");
+$username = $_SESSION['username'];
 
 // Handle Confirm Checkout
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_checkout'])) {
@@ -22,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_checkout'])) 
         $total += $row['quantity'] * $row['item_price'];
     }
 
-    // Insert order (simplified)
+    // Insert order
     $stmt = $conn->prepare("INSERT INTO orders (username, total_amount, date_ordered) VALUES (?, ?, NOW())");
     $stmt->bind_param("sd", $username, $total);
     $stmt->execute();
@@ -58,13 +59,14 @@ $result = $stmt->get_result();
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Checkout</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
             <a class="brand" href="index.php">My Store</a>
@@ -92,31 +94,37 @@ $result = $stmt->get_result();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
                     $grand_total = 0;
                     $currency = '$';
                     while ($row = $result->fetch_assoc()):
                         $item_total = $row['quantity'] * $row['price'];
                         $grand_total += $item_total;
-                        $currency = $row['currency']; // store currency for later
-                    ?>
+                        $currency = $row['currency'];
+                        ?>
                         <tr>
                             <td style="padding:8px;"><?php echo htmlspecialchars($row['name']); ?></td>
                             <td style="padding:8px;"><?php echo $row['quantity']; ?></td>
-                            <td style="padding:8px;"><?php echo $row['currency'] . number_format($row['price'],2); ?></td>
-                            <td style="padding:8px; text-align:right;"><?php echo $row['currency'] . number_format($item_total,2); ?></td>
+                            <td style="padding:8px;"><?php echo $row['currency'] . number_format($row['price'], 2); ?></td>
+                            <td style="padding:8px; text-align:right;">
+                                <?php echo $row['currency'] . number_format($item_total, 2); ?>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                     <tr>
                         <td colspan="3" style="text-align:right; padding:8px; font-weight:bold;">Grand Total:</td>
-                        <td style="padding:8px; font-weight:bold; text-align:right;"><?php echo $currency . number_format($grand_total,2); ?></td>
+                        <td style="padding:8px; font-weight:bold; text-align:right;">
+                            <?php echo $currency . number_format($grand_total, 2); ?>
+                        </td>
                     </tr>
                 </tbody>
             </table>
 
             <form method="POST" action="ConfirmCheckout.php" style="margin-top:20px;">
-                <button type="submit" name="confirm_checkout" style="padding:10px 20px; background-color:green; color:white;">Confirm Checkout</button>
-                <button type="submit" name="cancel_checkout" style="padding:10px 20px; background-color:red; color:white;">Cancel</button>
+                <button type="submit" name="confirm_checkout"
+                    style="padding:10px 20px; background-color:green; color:white;">Confirm Checkout</button>
+                <button type="submit" name="cancel_checkout"
+                    style="padding:10px 20px; background-color:red; color:white;">Cancel</button>
             </form>
 
 
@@ -127,4 +135,5 @@ $result = $stmt->get_result();
     </div>
 
 </body>
+
 </html>

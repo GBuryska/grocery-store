@@ -1,9 +1,9 @@
-<?php 
-session_start();
+<?php
 include "../backend/db_config.php"; // your DB connection
 
-// Assume user is logged in
-$username = $_SESSION['username'] ?? 'Braden'; // fallback for testing
+require_once "../backend/auth_check.php";
+auth("./login.php");
+$username = $_SESSION['username'];
 
 // Handle update quantity or remove item
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -38,13 +38,14 @@ $result = $stmt->get_result();
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>My Cart</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
             <a class="brand" href="index.php">My Store</a>
@@ -71,7 +72,6 @@ $result = $stmt->get_result();
                             <p class="brand"><?php echo htmlspecialchars($row['brand']); ?></p>
                         <?php endif; ?>
 
-                        <!-- Price -->
                         <?php if (!empty($row['sale_price']) && $row['sale_price'] > 0): ?>
                             <p>
                                 <span class="original-price"><?php echo $row['currency'] . $row['price']; ?></span>
@@ -81,11 +81,11 @@ $result = $stmt->get_result();
                             <p><?php echo $row['currency'] . $row['price']; ?></p>
                         <?php endif; ?>
 
-                        <!-- Quantity form -->
                         <form method="POST" style="margin-top:10px;">
                             <input type="hidden" name="cart_item_id" value="<?php echo $row['cart_item_id']; ?>">
                             <label>Quantity: </label>
-                            <input type="number" name="quantity" value="<?php echo $row['quantity']; ?>" min="1" style="width:60px;">
+                            <input type="number" name="quantity" value="<?php echo $row['quantity']; ?>" min="1"
+                                style="width:60px;">
                             <button type="submit" name="update_cart">Update</button>
                             <button type="submit" name="remove_cart" style="background-color:red;color:white;">Remove</button>
                         </form>
@@ -96,7 +96,6 @@ $result = $stmt->get_result();
             <?php endif; ?>
         </div>
 
-        <!-- Checkout button linking to checkout.php -->
         <?php if ($result && $result->num_rows > 0): ?>
             <form action="checkout.php" method="GET">
                 <button type="submit" class="checkout-btn">Checkout</button>
@@ -105,4 +104,5 @@ $result = $stmt->get_result();
     </div>
 
 </body>
+
 </html>
