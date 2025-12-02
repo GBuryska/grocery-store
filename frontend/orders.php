@@ -1,12 +1,9 @@
 <?php
-session_start();
 require_once "../backend/db_config.php";
 
-$username = $_SESSION['username'] ?? null;
-if (!$username) {
-    header("Location: ../frontend/LogIn.php");
-    exit();
-}
+require_once "../backend/auth_check.php";
+auth("./login.php");
+$username = $_SESSION['username'];
 
 // Fetch all orders for this user
 $sql = "
@@ -23,10 +20,12 @@ $result = $stmt->get_result();
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>My Orders</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
     <!-- Navbar -->
@@ -77,4 +76,5 @@ $result = $stmt->get_result();
     </div>
 
 </body>
+
 </html>
