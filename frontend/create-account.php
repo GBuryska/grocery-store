@@ -15,12 +15,13 @@
         </div>
 
         <div class="nav-right">
+            <a href="index.php">Search</a>
             <a href="login.php">Login</a>
             <a href="create-account.php" class="btn">Create Account</a>
         </div>
     </nav>
 
-    <div class="w-full max-w-md bg-white p-8 md:p-10 shadow-2xl rounded-xl border border-gray-100">
+    <div class="container login-signup">
 
         <h1>Sign Up</h1>
         <p>Join the Grocery Store for exclusive offers.</p>
@@ -31,13 +32,13 @@
 
         <form id="registerForm" onsubmit="handleRegistration(event)">
 
-            <div class="mb-4">
+            <div style="margin-bottom:15px;">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required placeholder="Enter a unique username"
                     minlength="3" maxlength="50">
             </div>
 
-            <div class="mb-6">
+            <div style="margin-bottom:15px;">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required
                     placeholder="Must be at least 8 characters" minlength="8">
