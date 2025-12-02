@@ -4,19 +4,6 @@ body {
   background: #fafafa;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  background: #333;
-  padding: 15px;
-}
-
-.navbar a {
-  color: white;
-  margin-left: 20px;
-  text-decoration: none;
-}
-
 .brand {
   font-weight: bold;
   font-size: 20px;
@@ -61,7 +48,6 @@ body {
   border-radius: 4px;
 }
 
-/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -94,14 +80,22 @@ body {
     padding: 0 20px;
 }
 
-/* Item Grid */
+.login-signup {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
 .item-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
 }
 
-/* Item Card */
 .item-card {
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -134,7 +128,6 @@ body {
     font-weight: bold;
 }
 
-/* Checkout Button */
 .checkout-btn {
     position: fixed;
     bottom: 20px;
