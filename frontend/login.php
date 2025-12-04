@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
     <nav class="navbar">
         <div class="nav-left">
-            <a class="brand" href="index.php">My Store</a>
+            <a class="brand" href="index.php">Grocery Store</a>
         </div>
 
         <div class="nav-right">
